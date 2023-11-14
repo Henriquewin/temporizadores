@@ -2,16 +2,14 @@ package com.hw.controller;
 
 import com.hw.model.Temporizador;
 import com.hw.service.TemporizadorService;
-import java.time.LocalDateTime;
 import java.util.List;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 @Controller
+//Página Principal onde é exibido os Temporizadores
 @RequestMapping("/temporizadores")
 public class TemporizadorController {
 
@@ -24,7 +22,7 @@ public String listarTemporizadores(Model model) {
     model.addAttribute("temporizadores", temporizadores);
     return "temporizadores";
 }
-
+// Método GET para a Página onde se configura e adiciona os temporizadores
 @GetMapping("/novo")
 public String mostrarFormulario(Model model) {
     if (temporizadorService.contarTemporizadores() >= 4) {
@@ -33,13 +31,13 @@ public String mostrarFormulario(Model model) {
     model.addAttribute("temporizador", new Temporizador());
     return "formulario_temporizador";
 }
-
+// Método POST para instanciar um novo temporizador
 @PostMapping("/novo")
 public String adicionarTemporizador(@ModelAttribute Temporizador temporizador) {
     temporizadorService.adicionarTemporizador(temporizador);
     return "redirect:/temporizadores/";
 }
-
+// Método para excluir um temporizador através do seu respectivo id
 @GetMapping("/excluir/{id}")
 public String excluirTemporizador(@PathVariable Long id) {
     temporizadorService.excluirTemporizador(id);
