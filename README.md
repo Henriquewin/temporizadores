@@ -5,6 +5,12 @@ Primeiramente se adiciona os temporizadores, configurando um nome e uma data par
 Cada temporizador é representado por um bloco na interface, mostrando dias, horas, minutos e segundos até a data específica.
 É possivel adicionar até 4 temporizadores simultâneos, também pode se excluir os já criados para estar criando outros.
 
+![image](https://github.com/Henriquewin/temporizadores/assets/47986390/a71e8273-6212-4a88-b4cc-06000fd98cba)
+
+![image](https://github.com/Henriquewin/temporizadores/assets/47986390/13e47bb6-ff02-44e7-b993-c8b34797e0c8)
+
+![image](https://github.com/Henriquewin/temporizadores/assets/47986390/077ad718-d8c0-4cba-b7e7-24ca4f961ae9)
+
 ## Tecnologias Utilizadas
 
 - HTML
