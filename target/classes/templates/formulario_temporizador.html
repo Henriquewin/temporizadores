@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Novo Temporizador</title>
+    <link rel="stylesheet" href="css/style.css">
+    <style>
+        body {
+            background: linear-gradient(120deg, #ffe53bd8, #ff2525da);
+            margin: 0;
+            padding: 0;
+            font-family: 'Open Sans', sans-serif;
+            height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .form-container {
+            text-align: center;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.5);
+            color: #fff;
+            background: rgba(5, 5, 5, .9);
+            letter-spacing: 3px;
+            width: 100%;
+            max-width: 400px;
+        }
+
+        h1 {
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+        }
+
+        input {
+            margin: 10px 0;
+            padding: 10px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+        }
+
+        input[type="submit"] {
+            background-color: #007bff;
+            color: #fff;
+            cursor: pointer;
+            width: 200px;
+        }
+        #cancelar{
+            background-color: red;
+        }
+    </style>
+</head>
+<body>
+    <div class="form-container">
+        <h1>Novo Temporizador</h1>
+        <form action="/temporizadores/novo" method="post" th:object="${temporizador}">
+            <input type="text" th:field="*{titulo}" placeholder="Título" required>
+            <input type="datetime-local" th:field="*{data}" required>
+            <input type="submit" value="Adicionar Temporizador">
+        </form>
+        <form action="/temporizadores/" method="get">
+            <input  id="cancelar" type="submit" value="cancelar">
+        </form> 
+    </div>
+</body>
+</html>
