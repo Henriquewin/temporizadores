@@ -3,8 +3,6 @@
 <head>
     <meta charset="UTF-8">
     <title>Temporizadores</title>
-    <!-- Inclusão do arquivo de estilo externo -->
-    <link rel="stylesheet" href="../static/css/style.css">
     <script th:inline="javascript">
 /* <![CDATA[ */
 function atualizarTemporizador() {
@@ -68,26 +66,19 @@ document.addEventListener("DOMContentLoaded", function () {
 <!-- Estilo da página -->
 <style>
     * {
-        margin: 20;
-        padding: 20;
         font-family: 'Open Sans', sans-serif;
     }
 
     body {
         background: linear-gradient(120deg, #ffe53bd8, #ff2525da);
-        margin: 20;
-        padding:20;
         font-family: 'Open Sans', sans-serif;
-        height: 640px;
+        height: 100vh;
+        overflow: hidden;
     }
 
     .container {
         text-align: center;
-        margin: 20px;
-    }
 
-    .header {
-        margin-bottom: 20px;
     }
 
     .relogios-container {
