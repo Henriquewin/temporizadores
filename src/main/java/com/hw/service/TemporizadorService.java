@@ -16,16 +16,15 @@ public class TemporizadorService {
 
     @Autowired
     private TemporizadorRepository temporizadorRepository;
-
+    //lista com temporizadores ativos
     public List<Temporizador> listarTemporizadores() {
         return temporizadorRepository.findAll();
     }
-
+    //Método para estar adicionado temporizador, seta titulo e data
     public void adicionarTemporizador(String titulo, LocalDateTime data) {
         Temporizador temporizador = new Temporizador();
         temporizador.setTitulo(titulo);
         temporizador.setData(data);
-    
         temporizadorRepository.save(temporizador);
     }
 
@@ -48,16 +47,18 @@ public class TemporizadorService {
     }
     return temporizadoresComCronometro;
 }
-
+//caso haja menos de 4 temporizadores ativos ai defato se adiciona o novo temporizador
 public void adicionarTemporizador(Temporizador temporizador) {
     if (contarTemporizadores() < 4) {
         temporizadorRepository.save(temporizador);
     }
 }
+// Método para excluir um temporizador
 public void excluirTemporizador(Long id) {
     temporizadorRepository.deleteById(id);
 }
 
+//metodo que conta quantos tempos estão em execucao
 public long contarTemporizadores() {
     return temporizadorRepository.count();
 }

@@ -1,46 +1,53 @@
-
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <title>Temporizadores</title>
+    <!-- Inclusão do arquivo de estilo externo -->
     <link rel="stylesheet" href="../static/css/style.css">
     <script th:inline="javascript">
 /* <![CDATA[ */
 function atualizarTemporizador() {
     setInterval(function () {
+        // Seleciona todos os elementos com a classe 'temporizador'
         var temporizadores = document.querySelectorAll('.temporizador');
         temporizadores.forEach(function (temporizador) {
+            // Obtém o ID e a data associados a cada temporizador
             var id = temporizador.getAttribute('data-id');
             var dataFinal = new Date(temporizador.getAttribute('data-data'));
             var agora = new Date();
             var diferenca = dataFinal - agora;
 
             if (diferenca > 0) {
+                // Calcula os componentes de tempo restantes
                 var dias = Math.floor(diferenca / (1000 * 60 * 60 * 24));
                 var horas = Math.floor((diferenca % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
                 var minutos = Math.floor((diferenca % (1000 * 60 * 60)) / (1000 * 60));
                 var segundos = Math.floor((diferenca % (1000 * 60)) / 1000);
 
+                // Modificação aqui para garantir que os elementos sejam encontrados antes de atualizá-los
                 var diasElement = document.querySelector('.temporizador-dias[data-id="' + id + '"]');
                 var horasElement = document.querySelector('.temporizador-horas[data-id="' + id + '"]');
                 var minutosElement = document.querySelector('.temporizador-minutos[data-id="' + id + '"]');
                 var segundosElement = document.querySelector('.temporizador-segundos[data-id="' + id + '"]');
 
                 if (diasElement && horasElement && minutosElement && segundosElement) {
+                    // Atualiza os elementos com os valores calculados
                     diasElement.innerHTML = dias;
                     horasElement.innerHTML = horas;
                     minutosElement.innerHTML = minutos;
                     segundosElement.innerHTML = segundos;
                 }
             } else {
+                // Exibe "Tempo expirado" quando o temporizador atinge zero
                 var todosTemporizadores = document.querySelectorAll('.temporizador[data-id="' + id + '"]');
                 todosTemporizadores.forEach(function (temporizadorExpirado) {
                     temporizadorExpirado.innerHTML = "Tempo expirado";
                 });
             }
 
-            var formattedDate = formatarData(dataFinal);
+            // Formata a data final e atualiza o elemento correspondente
+            var formattedDate = dataFinal.toLocaleDateString();
             var dataElement = document.querySelector('.temporizador-data[data-id="' + id + '"]');
             if (dataElement) {
                 dataElement.innerHTML = formattedDate;
@@ -50,12 +57,16 @@ function atualizarTemporizador() {
 }
 
 document.addEventListener("DOMContentLoaded", function () {
+    // Inicia a função de atualização automática dos temporizadores
     atualizarTemporizador();
 });
 /* ]]> */
-    </script>
 
-</head>    <style>
+    </script>
+</head>
+
+<!-- Estilo da página -->
+<style>
     * {
         margin: 20;
         padding: 20;
@@ -132,6 +143,7 @@ document.addEventListener("DOMContentLoaded", function () {
         margin-top: 10px;
     }
 
+    /* Estilo do botão */
     button {
         padding: 10px 20px;
         font-size: 16px;
@@ -142,6 +154,8 @@ document.addEventListener("DOMContentLoaded", function () {
         cursor: pointer;
         margin-top: 20px;
     }
+
+    /* Estilo do input do tipo submit */
     input[type="submit"] {
         background-color: #007bff;
         color: #fff;
@@ -150,13 +164,13 @@ document.addEventListener("DOMContentLoaded", function () {
         padding: 20px;
         border-radius: 10px;
         box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.5);
-
         letter-spacing: 3px;
         width: 100%;
         max-width: 400px;
     }
 
-    .excluir{
+    /* Estilo do link para excluir */
+    .excluir {
         background-color: #ff1100;
         color: #fff;
         cursor: pointer;
@@ -168,33 +182,39 @@ document.addEventListener("DOMContentLoaded", function () {
         text-decoration: none;
     }
 
-    .aviso{
-        background-color: rgba(0, 0, 0, 0.5);;
+    /* Estilo da mensagem de aviso */
+    .aviso {
+        background-color: rgba(0, 0, 0, 0.5);
         color: #fff;
         text-align: center;
-        padding: 20px;
-        margin: 20px;
+        padding: 10px;
+        margin: 10px;
         border-radius: 10px;
         box-shadow: 0px 8px 10px rgba(0, 0, 0, 0.5);
         letter-spacing: 3px;
-        text-decoration: none; 
+        text-decoration: none;
     }
 </style>
 
 <body>
     <div class="container">
         <div class="header">
+            <!-- Título da página -->
             <h1 id="titulo">Temporizadores</h1>
         </div>
         
         <div class="relogios-container">
+            <!-- Iteração sobre a lista de temporizadores -->
             <div th:each="temporizador : ${temporizadores}" class="relogio">
+                <!-- Seção de informações do temporizador -->
                 <div class="info">
                     <div th:text="${temporizador.titulo}"></div>
                     <div th:text="${temporizador.dataFormatada}"></div>
                 </div>
+                <!-- Elemento principal do temporizador -->
                 <div class="temporizador" th:attr="data-id=${temporizador.id}, data-data=${temporizador.data}"></div>
                 
+                <!-- Seção de exibição de tempo restante -->
                 <div class="tempo">
                     <div>Dias</div>
                     <div>Horas</div>
@@ -202,23 +222,25 @@ document.addEventListener("DOMContentLoaded", function () {
                     <div>Segundos</div>
                 </div>
                 <div class="tempo">
+                    <!-- Elementos de exibição de tempo restante -->
                     <div class="temporizador-dias" th:attr="data-id=${temporizador.id}">0</div>
                     <div class="temporizador-horas" th:attr="data-id=${temporizador.id}">0</div>
                     <div class="temporizador-minutos" th:attr="data-id=${temporizador.id}">0</div>
                     <div class="temporizador-segundos" th:attr="data-id=${temporizador.id}">0</div>
                 </div>
-                    <td>
-                        <a class="excluir" th:href="@{'/temporizadores/excluir/' + ${temporizador.id}}">Excluir</a>
-                        
-                    </td>
-
+                <!-- Botão para excluir o temporizador -->
+                <td>
+                    <a class="excluir" th:href="@{'/temporizadores/excluir/' + ${temporizador.id}}">Excluir</a>
+                </td>
             </div>
         </div>
 
-           <!-- Adicione um ID ao botão para facilitar a manipulação via JavaScript -->
-           <form id="novoTemporizadorForm" action="/temporizadores/novo" method="get">
+        <!-- Formulário para adicionar novo temporizador -->
+        <form id="novoTemporizadorForm" action="/temporizadores/novo" method="get">
             <input type="submit" value="Novo Temporizador">
         </form>
+        
+        <!-- Mensagem de aviso quando o limite é atingido -->
         <div class="aviso" id="limiteMensagem" style="display: none; color: red;">
             Limite de 4 contadores atingido.
         </div>
@@ -227,7 +249,9 @@ document.addEventListener("DOMContentLoaded", function () {
     <script th:inline="javascript">
         /*<![CDATA[*/
         document.addEventListener("DOMContentLoaded", function () {
+            // Definindo o limite de temporizadores
             var contadorLimite = 4;
+            // Obtendo a quantidade atual de temporizadores
             var temporizadores = /*[[${temporizadores.size()}]]*/ 0; // Use a variável que representa a lista de temporizadores
 
             // Ocultar o botão se o limite for atingido
@@ -235,10 +259,8 @@ document.addEventListener("DOMContentLoaded", function () {
                 document.getElementById("novoTemporizadorForm").style.display = "none";
                 document.getElementById("limiteMensagem").style.display = "block";
             }
-            
         });
         /*]]>*/
     </script>
 </body>
-
 </html>
